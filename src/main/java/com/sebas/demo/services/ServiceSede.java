@@ -12,7 +12,9 @@ public interface ServiceSede {
 
     SedesEntity save(SedesEntity sedesEntity);
     
-    String update(SedesEntity sedesEntity);
+    SedesEntity update(Long id, SedesEntity sedesEntity);
 
     void delete(Long id);
+
+    SedesEntity findByNombre(String nombreSede);
 }

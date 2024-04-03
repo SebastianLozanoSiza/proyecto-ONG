@@ -38,15 +38,19 @@ public class ServiceSedesImpl implements ServiceSede{
 
     @Override
     @Transactional
-    public String update(SedesEntity sedesEntity) {
-        Long id = sedesEntity.getId();
-        Optional<SedesEntity> sedesOptinal=sedeRepository.findById(id);
-        if(sedesOptinal.isPresent()){
-            sedeRepository.save(sedesEntity);
-            return "Sede editada";
-        }else{
-            return "id no encontrado";
+    public SedesEntity update(Long id, SedesEntity sedesEntity) {
+        Optional<SedesEntity> sedeCurrentOptional = sedeRepository.findById(id);
+
+        if (sedeCurrentOptional.isPresent()) {
+            SedesEntity sedeCurrent = sedeCurrentOptional.get();
+            sedeCurrent.setNombreSede(sedesEntity.getNombreSede());
+            sedeCurrent.setDireccion(sedesEntity.getDireccion());
+            sedeCurrent.setCiudad(sedesEntity.getCiudad());
+            sedeCurrent.setNombreDirector(sedesEntity.getNombreDirector());
+            sedeRepository.save(sedeCurrent);
+            return sedeCurrent;
         }
+        return null;
     }
 
     @Override
@@ -56,6 +60,12 @@ public class ServiceSedesImpl implements ServiceSede{
         if(sedeOptinal.isPresent()){
             sedeRepository.delete(sedeOptinal.get());
         } 
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SedesEntity findByNombre(String nombreSede) {
+        return sedeRepository.findByNombreSede(nombreSede);
     }
 
     
