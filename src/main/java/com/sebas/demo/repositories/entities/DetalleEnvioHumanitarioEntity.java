@@ -33,6 +33,6 @@ public class DetalleEnvioHumanitarioEntity{
     private int cantidadVoluntarios;
 
     @NotEmpty(message = "No puede estar vacio")
-    @Column(nullable = false, name = "profesion_voluntario")
+    @Column(nullable = false, name = "profesion_voluntarios")
     private String profesionVoluntario;
 }

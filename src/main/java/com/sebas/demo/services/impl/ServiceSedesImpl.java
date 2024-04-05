@@ -3,7 +3,6 @@ package com.sebas.demo.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,32 +41,36 @@ public class ServiceSedesImpl implements ServiceSede{
 
     @Override
     @Transactional(readOnly = true)
-    public SedesEntity findById(Long id) {
-        return sedeRepository.findById(id).orElse(null);
+    public SedeDTO findById(Long id) {
+        Optional<SedesEntity> sedeOptional = sedeRepository.findById(id);
+        return sedeOptional.map(convert::convertSedesDTO).orElse(null);
     }
 
     @Override
     @Transactional
-    public SedesEntity save(SedesEntity sedesEntity) {
-        return sedeRepository.save(sedesEntity);
+    public SedeDTO save(SedeDTO sedeDTO) {
+        SedesEntity sedesEntity = convert.convertSedesEntity(sedeDTO);
+        SedesEntity savedSedeEntity = sedeRepository.save(sedesEntity);
+        return convert.convertSedesDTO(savedSedeEntity);
     }
 
     @Override
     @Transactional
-    public SedesEntity update(Long id, SedesEntity sedesEntity) {
-        Optional<SedesEntity> sedeCurrentOptional = sedeRepository.findById(id);
-
-        if (sedeCurrentOptional.isPresent()) {
-            SedesEntity sedeCurrent = sedeCurrentOptional.get();
-            sedeCurrent.setNombreSede(sedesEntity.getNombreSede());
-            sedeCurrent.setDireccion(sedesEntity.getDireccion());
-            sedeCurrent.setCiudad(sedesEntity.getCiudad());
-            sedeCurrent.setNombreDirector(sedesEntity.getNombreDirector());
+    public SedeDTO update(Long id, SedeDTO sedeDTO) {
+        Optional<SedesEntity> sedeOptional = sedeRepository.findById(id);
+    
+        if (sedeOptional.isPresent()) {
+            SedesEntity sedeCurrent = sedeOptional.get();
+            sedeCurrent.setNombreSede(sedeDTO.getNombreSede());
+            sedeCurrent.setDireccion(sedeDTO.getDireccion());
+            sedeCurrent.setCiudad(sedeDTO.getCiudad());
+            sedeCurrent.setNombreDirector(sedeDTO.getNombreDirector());
             sedeRepository.save(sedeCurrent);
-            return sedeCurrent;
+            return sedeDTO;
         }
         return null;
     }
+    
 
     @Override
     @Transactional
@@ -80,10 +83,10 @@ public class ServiceSedesImpl implements ServiceSede{
 
     @Override
     @Transactional(readOnly = true)
-    public SedesEntity findByNombre(String nombreSede) {
-        return sedeRepository.findByNombreSede(nombreSede);
+    public SedeDTO findByNombre(String nombreSede) {
+        SedesEntity sedeEntity = sedeRepository.findByNombreSede(nombreSede);
+        return convert.convertSedesDTO(sedeEntity);
     }
+    
 
-    
-    
 }

@@ -1,7 +1,12 @@
 package com.sebas.demo.repositories.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,13 +15,19 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "refugio")
+@Table(name = "refugios")
 public class RefugioEntity{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombreRefugio;
+    @NotEmpty(message = "No puede estar vacio")
+    @Column(nullable = false) 
+    private String nombre;
 
-    private String nombreCiudad;
+    @NotEmpty(message = "No puede estar vacio")
+    @Column(nullable = false) 
+    private String ciudad;
     
 }
