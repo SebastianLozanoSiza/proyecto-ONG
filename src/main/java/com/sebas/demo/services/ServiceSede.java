@@ -2,19 +2,20 @@ package com.sebas.demo.services;
 
 import java.util.List;
 
+import com.sebas.demo.dto.SedeDTO;
 import com.sebas.demo.repositories.entities.SedesEntity;
 
 public interface ServiceSede {
     
-    List<SedesEntity> findAll();
+    List<SedeDTO> findAll();
 
-    SedesEntity findById(Long id);
+    SedeDTO findById(Long id);
 
-    SedesEntity save(SedesEntity sedesEntity);
+    SedeDTO save(SedeDTO sedeDTO);
     
-    SedesEntity update(Long id, SedesEntity sedesEntity);
+    SedeDTO update(Long id, SedeDTO sedeDTO);
 
     void delete(Long id);
 
-    SedesEntity findByNombre(String nombreSede);
+    SedeDTO findByNombre(String nombreSede);
 }

@@ -32,4 +32,8 @@ public class EnvioSedeEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     private SedesEntity sedesEntity;
 
+    @JoinColumn(name = "refugio_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private RefugioEntity refugioEntity;
+
 }
