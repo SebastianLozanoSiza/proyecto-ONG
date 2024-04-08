@@ -1,5 +1,6 @@
 package com.sebas.demo.repositories.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "socio")
-public class SocioEntity{
+public class SocioEntity implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +44,7 @@ public class SocioEntity{
 
     @Column(name="fecha_pago")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date fecha_pago;
+    private Date fechaPago;
 
     @JoinColumn(name = "sede_id")
     @ManyToOne(fetch = FetchType.LAZY)
